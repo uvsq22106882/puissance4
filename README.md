@@ -1,7 +1,12 @@
 ################################
+
 L1-MIASHS Groupe TD 2
 GROUPE 3
-PROJET PUISSANCE 4
+PROJET PUISSANCE 4   
+
+https://github.com/uvsq22106882/puissance4.git 
+
+Membres du groupe : 
 
 BOUDINAR LOUNES   22106882
 
