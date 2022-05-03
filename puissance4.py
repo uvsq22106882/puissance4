@@ -6,7 +6,7 @@
 
 #https://github.com/uvsq22106882/puissance4.git
 
- #import 
+#import 
 import tkinter as tk
 import random as rd 
 from random import randint 
@@ -16,27 +16,32 @@ z=5
 x=0
 y=0
 d=0
+t=True
+l=True
 #interface 
 racine=tk.Tk()
 racine.title("puissance 4")
 canvas=tk.Canvas(racine, bg="blue" , height=500 , width=500)
 #Fonctions 
 def terrain_de_jeu():
-    global n, z
-    for i in range(7):
-        for j in range(7):
-            canvas.create_oval(n,z,n+70,z+70, fill="white" , outline="black")
-            n=n+70
-        z=z+70
-        n=5
-
+    global n, z  , l
+    while l==True :
+        for i in range(7):
+            for j in range(7):
+                canvas.create_oval(n,z,n+70,z+70, fill="white" , outline="black")
+                n=n+70
+            z=z+70
+            n=5
+        l=False   
 def player():
-    c=rd.randint(0,10)
-    if c%2==0 :
-        canvas.create_text(250 , 250 , text="le joueur 1 commence " , fill="black" , font=("calibri","22")) 
-        
-    else : 
-        canvas.create_text(250, 250 , text ="le joueur 2 commence " , fill="black" , font=("calibri" , "22"))
+    global t 
+    while t==True: 
+        c=rd.randint(1,2)
+        if c%2==0 :
+            canvas.create_text(250 , 250 , text="le joueur 1 commence " , fill="black" , font=("calibri","22")) 
+        else : 
+            canvas.create_text(250, 250 , text ="le joueur 2 commence " , fill="black" , font=("calibri" , "22"))
+        t=False
         
 #def annuler le dernier coup 
 #def winner():
@@ -56,7 +61,7 @@ def player():
 
  
 #Bouttons 
-Bouton=tk.Button(racine, command=terrain_de_jeu  , text ="Generation de terrain de jeu" , font=("calibri" , "17") )    
+Bouton=tk.Button(racine, command=terrain_de_jeu  , text ="Generation de terrain de jeu" , font=("calibri" , "17") ) 
 Bouton1=tk.Button(racine, command=player , text=("Quel joueur commence") , font=("Calibri" , "17"))
 Bouton2= tk.Button(racine, command="...."   )
 
