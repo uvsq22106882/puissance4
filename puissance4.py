@@ -18,13 +18,15 @@ y=0
 d=0
 t=True
 l=True
+c=rd.randint(1,2)
+total=0
 #interface 
 racine=tk.Tk()
 racine.title("puissance 4")
 canvas=tk.Canvas(racine, bg="blue" , height=500 , width=500)
 #Fonctions 
 def terrain_de_jeu():
-    global n, z  , l
+    global n, z , l
     while l==True :
         for i in range(7):
             for j in range(7):
@@ -34,46 +36,71 @@ def terrain_de_jeu():
             n=5
         l=False   
 def player():
-    global t 
+    global t , c
     while t==True: 
-        c=rd.randint(1,2)
         if c%2==0 :
             canvas.create_text(250 , 250 , text="le joueur 1 commence " , fill="black" , font=("calibri","22")) 
         else : 
             canvas.create_text(250, 250 , text ="le joueur 2 commence " , fill="black" , font=("calibri" , "22"))
         t=False
-        
-#def annuler le dernier coup 
-#def winner():
-    #global x , y
-    #if ..... :
-        #y=y+1
-        #canvas.create_text(racine , text=("joueur 1 a gagné la partie pour la ", y ,"fois"))
-    #elif ..... : 
-        #x=x+1
-        #canvas.create_text(racine , text=("joueur 2 a gagné la partie pour la " , x , "fois "))
-    #else :
-        #canvas.create_text(racine , text=("match nul ") )
+Tableau=[[0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0]]
+#Définir dans quelle colonne est le clic
+def Recherche_colonne(xClic):
+    colonne=(xClic)//(100) 
+    return colonne
 
-#def affichage_du_score():
-    #canvas.create_text
+def Recherche_ligne(colonne):
+    ligne1=0
+    for i in range (8):        #Vérifier si des jetons sont déjà présent dans la colonne pour choisir la ligne
+        if Tableau[ligne1][colonne]==0:
+            ligne=ligne1
+        else:
+            ligne1=ligne1+1
+    return ligne
+
+def jeton (event):
+    global Tableau 
+    global c , total , x, y
+    nb_jeton=0
+    xclic,yclic=event.x , event.y
+    if 0<xclic<700: #Vérifier que le clic est dans le tableau
+        colonne=Recherche_colonne(xclic)
+        ligne=Recherche_ligne(colonne)
+        if c==1: #tour joueur rouge
+            canvas.create_oval(colonne*100+70,ligne*100+7,colonne*100+7,ligne*100+70, fill='red') #Placement du jeton au milieu de la case
+            c=2
+            print("C'est au tour du joueur 2")
+            Tableau[ligne][colonne]=1      #Définir que cette case est rouge dans le tableau
+            total=total+1
+        elif c==2: #Tour du joueur jaune
+            canvas.create_oval(colonne*100+70,ligne*100+7,colonne*100+7,ligne*100+70, fill='yellow')
+            c=1
+            print("C'est au tour du joueur 1")
+            Tableau[ligne][colonne]=2
+            total=total+1
+    if total==49: #Vérification de tout les jetons placés pour l'égalité
+        print("égalité")
+canvas.bind("<Button-1>", jeton)
 
 
- 
+
 #Bouttons 
 Bouton=tk.Button(racine, command=terrain_de_jeu  , text ="Generation de terrain de jeu" , font=("calibri" , "17") ) 
 Bouton1=tk.Button(racine, command=player , text=("Quel joueur commence") , font=("Calibri" , "17"))
-Bouton2= tk.Button(racine, command="...."   )
+
 
 
 #positionnement 
 canvas.grid()
 Bouton.grid(row=0,column=1)
 Bouton1.grid()
-Bouton2.grid()
+
 
 #Affichage de la fenetre 
 racine.mainloop() 
-
-
-
