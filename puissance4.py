@@ -51,11 +51,11 @@ Tableau=[[0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0]]
 #Définir dans quelle colonne est le clic
-def Recherche_colonne(xClic):
-    colonne=(xClic)//(100) 
+def Colonnes(xclic):
+    colonne=(xclic)//(70) 
     return colonne
 
-def Recherche_ligne(colonne):
+def Lignes(colonne):
     ligne1=0
     for i in range (8):        #Vérifier si des jetons sont déjà présent dans la colonne pour choisir la ligne
         if Tableau[ligne1][colonne]==0:
@@ -66,20 +66,19 @@ def Recherche_ligne(colonne):
 
 def jeton (event):
     global Tableau 
-    global c , total , x, y
-    nb_jeton=0
+    global c , total , x , y
     xclic,yclic=event.x , event.y
-    if 0<xclic<700: #Vérifier que le clic est dans le tableau
-        colonne=Recherche_colonne(xclic)
-        ligne=Recherche_ligne(colonne)
+    if 0<xclic<500 and 0<yclic<500: #Vérifier que le clic est dans le tableau
+        colonne=Colonnes(xclic)
+        ligne=Lignes(colonne)
         if c==1: #tour joueur rouge
-            canvas.create_oval(colonne*100+70,ligne*100+7,colonne*100+7,ligne*100+70, fill='red') #Placement du jeton au milieu de la case
+            canvas.create_oval(colonne*70,ligne*70,colonne*70+75,ligne*70+75, fill="red") #Placement du jeton au milieu de la case
             c=2
             print("C'est au tour du joueur 2")
             Tableau[ligne][colonne]=1      #Définir que cette case est rouge dans le tableau
             total=total+1
         elif c==2: #Tour du joueur jaune
-            canvas.create_oval(colonne*100+70,ligne*100+7,colonne*100+7,ligne*100+70, fill='yellow')
+            canvas.create_oval(colonne*70,ligne*70,colonne*70+75,ligne*70+75, fill="yellow")
             c=1
             print("C'est au tour du joueur 1")
             Tableau[ligne][colonne]=2
@@ -98,9 +97,9 @@ Bouton1=tk.Button(racine, command=player , text=("Quel joueur commence") , font=
 
 #positionnement 
 canvas.grid()
-Bouton.grid(row=0,column=1)
-Bouton1.grid()
+Bouton.grid(row=0,column=2)
+Bouton1.grid(row=0,column=1)
 
 
 #Affichage de la fenetre 
-racine.mainloop() 
+racine.mainloop()
