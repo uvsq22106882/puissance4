@@ -207,6 +207,12 @@ Bouton=tk.Button(racine, command=terrain_de_jeu  , text ="Generation de terrain 
 Bouton1=tk.Button(racine, command=player , text=("Quel joueur commence") , font=("Calibri" , "17"))
 #Bouton2=tk.Button(racine, command=annuler , text=("Annuler le coup") , font=("calibri","17"))
 
+#bouton_sauv = tk.Button(racine, text="Sauvegarde", command=sauvegarde)
+#bouton_config_sauv = tk.Button(racine, text="Config sauvegardée",
+#                               command=load_bouton
+#                               )
+# Ces deux boutons viennent du corrigé du projet du tas de sable
+
 
 
 #positionnement 
