@@ -145,12 +145,67 @@ def WinCondition():
     Win = False
     return Win
             
+def annuler():
+    canvas.after_cancel("<Button-1>", jeton)
+
+# -----------------------------------------------------------------------------------
+
+def sauvegarde():
+    """Sauvegarde la config courante dans le fichier sauvegarde"""
+    fic = open("sauvegarde", "w")
+    fic.write(str(N)+"\n")
+    for i in range(1, N+1):
+        for j in range(1, N+1):
+            fic.write(str(config_cur[i][j]))
+            fic.write("\n")
+    fic.close()
 
 
+def load():
+    """Charge la configuration sauvegardée et la retourne si
+    elle a même valeur N que la config courante, sinon retourne config vide
+    """
+    fic = open("sauvegarde", "r")
+    config = [[0 for i in range(N+2)] for j in range(N+2)]
+    ligne = fic.readline()
+    n = int(ligne)
+    if n != N:
+        fic.close()
+        return config
+    i = j = 1
+    for ligne in fic:
+        config[i][j] = int(ligne)
+        j += 1
+        if j == N + 1:
+            j = 1
+            i += 1
+    fic.close()
+    return config
+
+
+def load_bouton():
+    """Modifie la config courante à partir de la config sauvegardée,
+        ou fait une opération avec cette config
+    """
+    global config_cur, add_active, sous_active
+    if add_active:
+        config_cur = addition(config_cur, load())
+        add_active = False
+    elif sous_active:
+        config_cur = soustraction(config_cur, load())
+        sous_active = False
+    else:
+        config_cur = load()
+    affiche_grille(config_cur)
+
+# Ces trois fonctions viennent toutes du corrigé du projet sur le tas de sable
+
+# --------------------------------------------------------------------------------------------
 
 #Boutons 
 Bouton=tk.Button(racine, command=terrain_de_jeu  , text ="Generation de terrain de jeu" , font=("calibri" , "17") ) 
 Bouton1=tk.Button(racine, command=player , text=("Quel joueur commence") , font=("Calibri" , "17"))
+#Bouton2=tk.Button(racine, command=annuler , text=("Annuler le coup") , font=("calibri","17"))
 
 
 
