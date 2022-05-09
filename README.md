@@ -36,4 +36,12 @@ Lors de chaque manche qui passe, la couleur des jetons peut changer pour les jou
 Le programme s'exécute à plusieurs reprises, et le premier joueur réussissant à gagner 3 points(chaque manche est un point) remporte la partie, le score apparaissant au-dessus du plateau de jeu.
 
 
+PROBLEME RENCONTRER Non résolu:
+
 ###Pour cette dernière partie, nous avons rencontré des difficultés, de ce fait, nous ne l’avons pas ajouté dans le programme final pour qu’il puisse fonctionner sans soucis ###
+
+###Faire arreter le jeu apres que un joueur ait gagné 
+
+###Faire enregistrer la partie , nous avons utilisé les fonctions de fichiers et de sauvegrade utilisés avec le projet tas de sable mais le programme ne marchait pas 
+
+###Annulation du dernier coup , nous avons pensé a faire un delete mais ca n'a pas marcher puis un destroy , pour au final utiliser un after_cancel mais la fonction ne marche toujours pas 
