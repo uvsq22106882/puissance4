@@ -160,6 +160,16 @@ def WinCondition():
             
 def annuler():
     canvas.after_cancel("<Button-1>", jeton)
+    
+    
+def partie_():
+    global cpt 
+    if total%4==0 and c==1 and Win==True:
+        cpt=cpt+1
+        print("le nombre de partie gagné par le joueur 1 est", cpt)
+    elif total%4==0 and c==2 and Win==True: 
+        cpt=cpt+1
+        print("le nombre de partie gagné par le joueur 2 est", cpt)
 
 
 # -----------------------------------------------------------------------------------
