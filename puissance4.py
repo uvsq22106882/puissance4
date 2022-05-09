@@ -229,7 +229,7 @@ canvas.grid()
 Bouton.grid(row=0,column=1)
 Bouton1.grid(row=0 , column=2)
 Bouton2.grid(row=1, column=1)
-Bouton3.grid()
+Bouton3.grid(row=1,column=3)
 Bouton4.grid(row=1, column=2)
 
 
