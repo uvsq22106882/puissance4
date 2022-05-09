@@ -45,3 +45,5 @@ PROBLEME RENCONTRER Non résolu:
 ###Faire enregistrer la partie , nous avons utilisé les fonctions de fichiers et de sauvegrade utilisés avec le projet tas de sable mais le programme ne marchait pas 
 
 ###Annulation du dernier coup , nous avons pensé a faire un delete mais ca n'a pas marcher puis un destroy , pour au final utiliser un after_cancel mais la fonction ne marche toujours pas 
+
+###Faire apparaitre les jetons de bas en haut , Probleme résolu avec le changment de variable de la fonction Ligne###
