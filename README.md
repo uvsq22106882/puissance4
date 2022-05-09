@@ -38,9 +38,8 @@ Le programme s'exécute à plusieurs reprises, et le premier joueur réussissant
 
 PROBLEME RENCONTRER Non résolu:
 
-###Pour cette dernière partie, nous avons rencontré des difficultés, de ce fait, nous ne l’avons pas ajouté dans le programme final pour qu’il puisse fonctionner sans soucis ###
+###Pour cette dernière partie, nous avons rencontré des difficultés, de ce fait, nous ne l’avons pas éxecuté dans le programme final pour qu’il puisse fonctionner sans soucis ###
 
-###Faire arreter le jeu apres que un joueur ait gagné 
 
 ###Faire enregistrer la partie , nous avons utilisé les fonctions de fichiers et de sauvegrade utilisés avec le projet tas de sable mais le programme ne marchait pas 
 
