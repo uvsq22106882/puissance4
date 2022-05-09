@@ -7,26 +7,32 @@
 #https://github.com/uvsq22106882/puissance4.git
 
 #import 
-from struct import pack
+
 import tkinter as tk
 import random as rd 
 from random import randint
-from turtle import end_poly 
+
 #initialisation des variables 
-n=5
-z=105
+#valeur remise à 0
 x=0
 y=0
 d=0
+total=0
+#Booléen 
 t=True
 l=True
+#variable global 
 c=rd.randint(1,2)
-total=0
+n=5
+z=105
+N=8
 #interface 
+
 racine=tk.Tk()
 racine.title("puissance 4")
 canvas=tk.Canvas(racine, bg="blue" , height=800 , width=700)
 #Fonctions 
+
 def terrain_de_jeu():
     global n, z , l
     while l==True :
@@ -38,7 +44,9 @@ def terrain_de_jeu():
             n=5
         l=False   
     canvas.create_rectangle(0, 0, 750, 100, fill="grey")
-def player():
+
+
+def player(): #quel joueur commence 
     global t , c
     if total == 0:
         if c%2==0 :
@@ -53,12 +61,12 @@ Tableau=[[0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0]]
-#Définir dans quelle colonne est le clic
-def Recherche_colonne(xClic):
-    colonne=(xClic)//(100) 
+
+def Colonnes(xclic):    #Définir dans quelle colonne est le clic
+    colonne=(xclic)//(100) 
     return colonne
 
-def Recherche_ligne(colonne):
+def Lignes(colonne):
     for i in range(7):        #Vérifier si des jetons sont déjà présents dans la colonne pour choisir la ligne
         p=6-i
         if Tableau[p][colonne]==0:
@@ -68,14 +76,14 @@ def Recherche_ligne(colonne):
             p=p-1
     return ligne
 
-def jeton (event):
+def jeton (event): 
+    "création des jetons dés le clic sur la case "
     global Tableau 
     global c , total , x, y
-    nb_jeton=0
     xclic,yclic=event.x , event.y
-    if 0<xclic<701: #Vérifier que le clic est dans le tableau
-        colonne=Recherche_colonne(xclic)
-        ligne=Recherche_ligne(colonne)
+    if 0<xclic<700 and 0<yclic<700: #Vérifier que le clic est dans le tableau
+        colonne=Colonnes(xclic)
+        ligne=Lignes(colonne)
         if c==1: #tour joueur rouge
             canvas.create_oval(colonne*100+100,ligne*100+110,colonne*100+10,ligne*100+200, fill='red') #Placement du jeton au milieu de la case
             Tableau[ligne][colonne]=1      #Définir que cette case est rouge dans le tableau
@@ -84,7 +92,7 @@ def jeton (event):
             c=2
             print("Au tour du joueur 2")
         elif c==2: #Tour du joueur jaune
-            canvas.create_oval(colonne*100+100,ligne*100+110,colonne*100+10,ligne*100+200, fill='yellow')
+            canvas.create_oval(colonne*100+100,ligne*100+110,colonne*100+10,ligne*100+200, fill='yellow') #Placement du jeton au milieu de la case
             Tableau[ligne][colonne]=2
             Win = WinCondition()
             total=total+1
@@ -99,9 +107,13 @@ def jeton (event):
         else:
             canvas.create_text(350 , 50 , text ="Joueur 1 (Rouge) gagne!" , fill="black" , font=("calibri","22"))
             return
+    elif Win==False and total==49:
+        canvas.create_text(350,50, text="égalité" , fill="black" , font=("calibri " , "22"))
+        
 canvas.bind("<Button-1>", jeton)
 
-def WinCondition():
+def WinCondition(): 
+    "Vérifie l'alligenement de 4 jetons de la meme couleur horizontalement , verticalement et en diagonale "
     for i in range(7):
         for j in range(4):
             if Tableau[i][j]==c:
@@ -143,10 +155,12 @@ def WinCondition():
                     Win = True
                     return Win
     Win = False
-    return Win
+    return Win 
+
             
 def annuler():
     canvas.after_cancel("<Button-1>", jeton)
+
 
 # -----------------------------------------------------------------------------------
 
@@ -156,7 +170,7 @@ def sauvegarde():
     fic.write(str(N)+"\n")
     for i in range(1, N+1):
         for j in range(1, N+1):
-            fic.write(str(config_cur[i][j]))
+            fic.write(str(Tableau[i][j]))
             fic.write("\n")
     fic.close()
 
@@ -183,43 +197,27 @@ def load():
     return config
 
 
-def load_bouton():
-    """Modifie la config courante à partir de la config sauvegardée,
-        ou fait une opération avec cette config
-    """
-    global config_cur, add_active, sous_active
-    if add_active:
-        config_cur = addition(config_cur, load())
-        add_active = False
-    elif sous_active:
-        config_cur = soustraction(config_cur, load())
-        sous_active = False
-    else:
-        config_cur = load()
-    affiche_grille(config_cur)
-
-# Ces trois fonctions viennent toutes du corrigé du projet sur le tas de sable
+# Ces deux fonctions viennent toutes du corrigé du projet sur le tas de sable
 
 # --------------------------------------------------------------------------------------------
 
 #Boutons 
 Bouton=tk.Button(racine, command=terrain_de_jeu  , text ="Generation de terrain de jeu" , font=("calibri" , "17") ) 
 Bouton1=tk.Button(racine, command=player , text=("Quel joueur commence") , font=("Calibri" , "17"))
-#Bouton2=tk.Button(racine, command=annuler , text=("Annuler le coup") , font=("calibri","17"))
-
-#bouton_sauv = tk.Button(racine, text="Sauvegarde", command=sauvegarde)
-#bouton_config_sauv = tk.Button(racine, text="Config sauvegardée",
-#                               command=load_bouton
-#                               )
-# Ces deux boutons viennent du corrigé du projet du tas de sable
+Bouton2=tk.Button(racine, command=annuler , text=("Annuler le coup") , font=("calibri","17"))
+#Bouton3=tk.Button(racine,command=sauvegarde ,  text="Sauvegarde" , font=("calibri","22"))
 
 
+
+#------------------------------------------------------------
 
 #positionnement 
+
 canvas.grid()
 Bouton.grid(row=0,column=1)
-Bouton1.grid()
-
-
+Bouton1.grid(row=0 , column=2)
+Bouton2.grid(row=0, column=3)
+#Bouton3(row=0 , column=4)
 #Affichage de la fenetre 
+
 racine.mainloop() 
