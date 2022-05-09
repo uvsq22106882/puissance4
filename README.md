@@ -33,7 +33,7 @@ Le programme s'est fait en trois étapes:
 
 Lors de chaque manche qui passe, la couleur des jetons peut changer pour les joueurs, suivant un tirage aléatoire(1 pour rouge et 2 pour jaune).
 
-Le programme s'exécute à plusieurs reprises, et le premier joueur réussissant à gagner 3 points(chaque manche est un point) remporte la partie, le score apparaissant au-dessus du plateau de jeu.
+Le programme s'exécute à plusieurs reprises, et le premier joueur réussissant à gagner 3 points(chaque manche est égale a un point) remporte la partie, le score apparait au-dessus du plateau de jeu.
 
 
 PROBLEME RENCONTRER Non résolu:
@@ -46,4 +46,4 @@ PROBLEME RENCONTRER Non résolu:
 
 ###Annulation du dernier coup , nous avons pensé a faire un delete mais ca n'a pas marcher puis un destroy , pour au final utiliser un after_cancel mais la fonction ne marche toujours pas 
 
-###Faire apparaitre les jetons de bas en haut , Probleme résolu avec le changment de variable de la fonction Ligne###
+###Faire apparaitre les jetons de bas en haut , Probléme résolu avec le changment de variable de la fonction Ligne###
