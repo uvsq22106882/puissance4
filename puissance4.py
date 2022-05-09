@@ -8,32 +8,41 @@
 
 #import 
 
-import tkinter as tk
-import random as rd 
+import tkinter as tk   #libraire interface graphique 
+import random as rd    #libraire aléatoire 
 from random import randint
+import pickle as pc     #libraire pour sauvegarde 
 
 #initialisation des variables 
+
 #valeur remise à 0
 x=0
 y=0
 d=0
+cpt=0
 total=0
+Tableau1=[]
+
 #Booléen 
 t=True
 l=True
+
 #variable global 
 c=rd.randint(1,2)
 n=5
 z=105
 N=8
+
 #interface 
 
 racine=tk.Tk()
 racine.title("puissance 4")
 canvas=tk.Canvas(racine, bg="blue" , height=800 , width=700)
+
 #Fonctions 
 
-def terrain_de_jeu():
+def terrain_de_jeu():  
+    "generation du terrain de jeu une grille a 49 cercles"
     global n, z , l
     while l==True :
         for i in range(7):
@@ -46,7 +55,8 @@ def terrain_de_jeu():
     canvas.create_rectangle(0, 0, 750, 100, fill="grey")
 
 
-def player(): #quel joueur commence 
+def player(): 
+    "quel joueur commence" 
     global t , c
     if total == 0:
         if c%2==0 :
@@ -62,12 +72,14 @@ Tableau=[[0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0]]
 
-def Colonnes(xclic):    #Définir dans quelle colonne est le clic
+def Colonnes(xclic):    
+    "Définir dans quelle colonne est le clic"
     colonne=(xclic)//(100) 
     return colonne
 
 def Lignes(colonne):
-    for i in range(7):        #Vérifier si des jetons sont déjà présents dans la colonne pour choisir la ligne
+    "Vérifier si les jetons sont déjà présents dans la colonne pour choisir la ligne"
+    for i in range(7):        
         p=6-i
         if Tableau[p][colonne]==0:
             ligne=p
@@ -99,7 +111,7 @@ def jeton (event):
             c=1
             print("Au tour du joueur 1")
     if total == 1:
-        canvas.create_rectangle(0,0,750,100, fill="grey")
+        canvas.create_rectangle(0,0,750,100, fill="grey")   #pour afficher du text , le résultat 
     if Win == True:
         if c==1:
             canvas.create_text(350 , 50 , text ="Joueur 2 (Jaune) gagne!" , fill="black" , font=("calibri","22"))
@@ -109,8 +121,8 @@ def jeton (event):
             return
     elif Win==False and total==49:
         canvas.create_text(350,50, text="égalité" , fill="black" , font=("calibri " , "22"))
-        
 canvas.bind("<Button-1>", jeton)
+
 
 def WinCondition(): 
     "Vérifie l'alligenement de 4 jetons de la meme couleur horizontalement , verticalement et en diagonale "
@@ -133,7 +145,7 @@ def WinCondition():
                         counter += 1
                 if counter == 4:
                     Win = True
-                    return Win
+                    return Win 
     for i in range (4):
         for j in range(4):
             if Tableau[i][j]==c:
@@ -143,7 +155,7 @@ def WinCondition():
                         counter += 1
                 if counter == 4:
                     Win = True
-                    return Win
+                    return Win       
     for i in range (4):
         for j in range(7):
             if Tableau[i+3][j]==c:
@@ -157,66 +169,55 @@ def WinCondition():
     Win = False
     return Win 
 
+
             
-def annuler():
+def annuler():  
+    "annuler le dernier coup joué "
     canvas.after_cancel("<Button-1>", jeton)
-    
-    
+
+ 
+def Save():
+    "sauvegarde du jeu en cours "
+    fichier= open("sauvegarde","w")
+    pc.dump(Tableau1, fichier)
+    fichier.close()
+
+def Load():
+    "reprendre la partie laissé  "
+    global Tableau1 
+    Tableau2=[]
+    fichier= open("sauvegarde", "r") 
+    pc.load(fichier)
+    fichier.close()
+    for line in fichier :
+        Tableau2.append(line)
+    Tableau1=Tableau2
 
 # -----------------------------------------------------------------------------------
 
-def sauvegarde():
-    """Sauvegarde la config courante dans le fichier sauvegarde"""
-    fic = open("sauvegarde", "w")
-    fic.write(str(N)+"\n")
-    for i in range(1, N+1):
-        for j in range(1, N+1):
-            fic.write(str(Tableau[i][j]))
-            fic.write("\n")
-    fic.close()
 
-
-def load():
-    """Charge la configuration sauvegardée et la retourne si
-    elle a même valeur N que la config courante, sinon retourne config vide
-    """
-    fic = open("sauvegarde", "r")
-    config = [[0 for i in range(N+2)] for j in range(N+2)]
-    ligne = fic.readline()
-    n = int(ligne)
-    if n != N:
-        fic.close()
-        return config
-    i = j = 1
-    for ligne in fic:
-        config[i][j] = int(ligne)
-        j += 1
-        if j == N + 1:
-            j = 1
-            i += 1
-    fic.close()
-    return config
 
 def partie_():
+    "montrer le nombre de fois que chaqu'un a gagné "
     global cpt 
     if total%4==0 and c==1 and Win==True:
         cpt=cpt+1
         print("le nombre de partie gagné par le joueur 1 est", cpt)
     elif total%4==0 and c==2 and Win==True: 
         cpt=cpt+1
-        print("le nombre de partie gagné par le joueur 2 est", cpt)
+        print("le nombre de partie gagné par le joueur 2 est", cpt)   
 
 
-
-# Ces deux premieres fonctions viennent toutes du corrigé du projet sur le tas de sable
 
 # --------------------------------------------------------------------------------------------
 
 #Boutons 
+
 Bouton=tk.Button(racine, command=terrain_de_jeu  , text ="Generation de terrain de jeu" , font=("calibri" , "17") ) 
 Bouton1=tk.Button(racine, command=player , text=("Quel joueur commence") , font=("Calibri" , "17"))
 Bouton2=tk.Button(racine, command=annuler , text=("Annuler le coup") , font=("calibri","17"))
-#Bouton3=tk.Button(racine,command=sauvegarde ,  text="Sauvegarde" , font=("calibri","22"))
+Bouton3=tk.Button(racine,command=Save ,  text="Sauvegarde" , font=("calibri","22"))
+Bouton4=tk.Button(racine, command=Load , text="telecharge" , font=("calibri" , "22"))
 
 
 
@@ -227,8 +228,11 @@ Bouton2=tk.Button(racine, command=annuler , text=("Annuler le coup") , font=("ca
 canvas.grid()
 Bouton.grid(row=0,column=1)
 Bouton1.grid(row=0 , column=2)
-Bouton2.grid(row=0, column=3)
-#Bouton3(row=0 , column=4)
+Bouton2.grid(row=1, column=1)
+Bouton3.grid()
+Bouton4.grid(row=1, column=2)
+
+
 #Affichage de la fenetre 
 
 racine.mainloop() 
